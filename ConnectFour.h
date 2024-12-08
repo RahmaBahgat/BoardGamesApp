@@ -194,12 +194,16 @@ void ConnectFourPlayer<T>::getmove(int &x, int &y) {
     cin.ignore();
 }
 template<typename T>
-ConnectFourRandomPlayer<T>::ConnectFourRandomPlayer(T symbol) : RandomPlayer<T>(symbol){}
+ConnectFourRandomPlayer<T>::ConnectFourRandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
+    srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
+
+}
 
 template<typename T>
 void ConnectFourRandomPlayer<T>::getmove(int &x, int &y) {
     x = rand() % 6;  // Random number between 0 and 5
     y = rand() % 7;  // Random number between 0 and 6
+
 }
 
 #endif //CONNECTFOUR_H
