@@ -78,7 +78,7 @@ void UltimateTicTacToe_Board<T>::display_board() {
                     int j = ultimate_col * sub_board_size + sub_col;
 
                     // Print each cell with indices
-                    cout << " [" << i << "," << j << "]";
+                    cout << " [" << i << "," << j << "]  ";
                 }
                 cout << " | ";
             }
