@@ -62,7 +62,39 @@ NumericalTicTacToe_Board<T>::~NumericalTicTacToe_Board() {
 
 template<typename T>
 bool NumericalTicTacToe_Board<T>::update_board(int x, int y, T number) {
+    //for random player
+    int numberPC = rand() % 10;
+    if (number == -1 || number == -2) {
 
+        // Validate coordinates and check if the cell is empty
+        if (x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != 0) {
+            return false;
+        }
+
+        if(number == -1) {
+            while(numberPC % 2 == 0 ) {
+                numberPC = rand() % 10;
+            }
+        }
+        else if(number == -2) {
+            while(numberPC % 2 != 0 ) {
+                numberPC = rand() % 10;
+            }
+        }
+        number = numberPC;
+
+        // Check if the number has already been used
+        if (keepTrack[number - 1] > 0) { // Numbers are only used once
+            return false;
+        }
+        // Place the number on the board
+        this->board[x][y] = number;
+        ++keepTrack[number - 1]; // Mark the number as used
+        ++this->n_moves;
+        return true;
+    }
+
+    //For Human player
 
     // Validate coordinates and check if the cell is empty
     if (x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != 0) {
@@ -118,12 +150,16 @@ bool NumericalTicTacToe_Board<T>::is_win() {
         for (int j = 0; j < this->columns; j++) {
             if(i - 2 >= 0 && j + 2 < this->columns) {
                 if (this->board[i][j] + this->board[i - 1 ][j + 1] + this->board[i - 2 ][j + 2] == 15) {
-                    return true;
+                    if(this->board[i][j] != 0 && this->board[i - 1 ][j + 1] != 0 && this->board[i - 2 ][j + 2] != 0) {
+                        return true;
+                    }
                 }
             }
             else if(i + 2 < this->rows && j + 2 < this ->columns) {
                 if (this->board[i][j] + this->board[i + 1 ][j + 1] + this->board[i + 2 ][j + 2] == 15) {
-                    return true;
+                    if(this->board[i][j] != 0 && this->board[i + 1 ][j + 1] != 0 && this->board[i + 2 ][j + 2] != 0) {
+                        return true;
+                    }
                 }
             }
         }
@@ -135,7 +171,9 @@ bool NumericalTicTacToe_Board<T>::is_win() {
         for (int j = 0; j < this->rows; j++) {
             if(i + 2 < this->columns) {
                 if (this->board[j][i] + this->board[j][i + 1] + this->board[j][i + 2] == 15) {
-                    return true;
+                    if(this->board[i][j] != 0 && this->board[j][i + 1] != 0 && this->board[j][i + 2] != 0) {
+                        return true;
+                    }
                 }
             }
         }
@@ -147,7 +185,9 @@ bool NumericalTicTacToe_Board<T>::is_win() {
         for (int j = 0; j < this->rows; j++) {
             if(j + 2 < this->rows ) {
                 if (this->board[j][i] +  this->board[j + 1 ][i] + this->board[j + 2 ][i] ==  15) {
-                    return true;
+                    if(this->board[i][j] != 0 && this->board[j + 1 ][i] != 0 && this->board[j + 2 ][i] != 0) {
+                        return true;
+                    }
                 }
             }
         }
@@ -190,18 +230,6 @@ template<typename T>
 void NumericalTicTacToe_RandomPlayer <T>::getmove(int &x, int &y) {
     x = rand() % 3;  // Random number between 0 and 2
     y = rand() % 3;  // Random number between 0 and 2
-    int numberPC = rand() % 10;
-    if(this->symbol == 1) {
-        while(numberPC % 2 == 0 ) {
-            numberPC = rand() % 10;
-        }
-    }
-    else if(this->symbol == 2) {
-        while(numberPC % 2 != 0 ) {
-            numberPC = rand() % 10;
-        }
-    }
-    this->symbol = numberPC;
-    
+    this->symbol = this->symbol;
 }
 #endif //NUMERICALTICTACTOE_H
