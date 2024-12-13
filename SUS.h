@@ -12,7 +12,6 @@ using namespace std;
 
 template <typename T>
 class SUS_Board : public Board<T> {
-private:
     Player<T>* players[2];
     int counters[2] = {0, 0}; // Player scores
 
