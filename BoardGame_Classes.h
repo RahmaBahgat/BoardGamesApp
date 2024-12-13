@@ -4,17 +4,21 @@
 #include <string>
 #include <vector>
 using namespace std;
+/*
+rows: the number of rows in the board
+columns: the number of columns in the board
+board: a 2D array to store the board state
+n_moves: the number of moves made on the board
+ */
 
 template <typename T>
-class Board {
+class Board {//an abstract base class that defines the interface for a board game board
 protected:
     int rows, columns;
-    T** board;
-    int n_moves = 0;
+    T** board; //dynamic allocation (**)
+    int n_moves = 0; //Useful for win/draw logic.
 
-public:
-
-
+public://pure virtual methods:
     /// Return true if move is valid and put it on the board
     /// within board boundaries in an empty cell
     /// Return false otherwise
@@ -33,12 +37,21 @@ public:
     virtual bool game_is_over() = 0;
 };
 
+/*
+name: the name of the player
+symbol: the symbol used by the player on the board
+boardPtr: a pointer to the board object (why?)
+ */
 template <typename T>
 class Player {
 protected:
     string name;
     T symbol;
-    Board<T>* boardPtr;  // Pointer to the board
+    Board<T>* boardPtr; //a pointer to the Board object
+/*Points to the associated board object , Why pointers?
+Allows players to interact with any board without copying it
+Flexibility for games with different board implementations
+*/
 public:
     /// Two constructors to initiate players
     /// Give the player a symbol to use in playing
@@ -47,10 +60,11 @@ public:
     Player(string n, T symbol);
     Player(T symbol); // For computer players
 
-    virtual void getmove(int& x, int& y) = 0;
+    virtual void getmove(int& x, int& y) = 0; //by reference : Enables the method to update x and y directly without returning them.
+
     T getsymbol();
     string getname();
-    void setBoard(Board<T>* b);
+    void setBoard(Board<T>* b); //Links the player to a board.
 };
 
 /// This class represents a random computer player
@@ -59,19 +73,18 @@ public:
 template <typename T>
 class RandomPlayer : public Player<T> {
 protected:
-    int dimension;
+    int dimension; //the size of the board
 public:
     // Take a symbol and pass it to the parent
     RandomPlayer(T symbol);
     // Generate a random move
-    virtual void getmove(int& x, int& y) = 0;
+    virtual void getmove(int& x, int& y) = 0;//(why by reference ?)Enables the method to update x and y directly without returning them.
 };
 
 template <typename T>
 class GameManager {
-private:
-    Board<T>* boardPtr;
-    Player<T>* players[2];
+    Board<T>* boardPtr; // Links the manager to a board.
+    Player<T>* players[2]; //Array of two player pointers.->Flexibility for any Player implementation.
 public:
     GameManager(Board<T>*, Player<T>* playerPtr[2]);
 
@@ -80,10 +93,6 @@ public:
 
 
 //--------------------------------------- IMPLEMENTATION
-
-#include <iostream>
-using namespace std;
-
 template <typename T>
 GameManager<T>::GameManager(Board<T>* bPtr, Player<T>* playerPtr[2]) {
     boardPtr = bPtr;
@@ -93,12 +102,13 @@ GameManager<T>::GameManager(Board<T>* bPtr, Player<T>* playerPtr[2]) {
 
 template <typename T>
 void GameManager<T>::run() {
+    ///the main game loop that alternates between the two players, updates the board,and checks for a winner or a draw.
     int x, y;
 
     boardPtr->display_board();
 
     while (!boardPtr->game_is_over()) {
-        for (int i : {0, 1}) {
+        for (int i : {0, 1}) { //i only = 0 or 1 corresponding to the 2 players
             players[i]->getmove(x, y);
             while (!boardPtr->update_board(x, y, players[i]->getsymbol())) {
                 players[i]->getmove(x, y);
@@ -117,7 +127,6 @@ void GameManager<T>::run() {
 }
 
 
-using namespace std;
 // Constructor for Player with a name and symbol
 template <typename T>
 Player<T>::Player(std::string n, T symbol) {
@@ -153,24 +162,6 @@ template <typename T>
 void Player<T>::setBoard(Board<T>* b) {
     this->boardPtr = b;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #endif //_BOARDGAME_CLASSES_H
