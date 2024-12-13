@@ -16,6 +16,7 @@ public:
     bool is_win() override;
     bool is_draw() override;
     bool game_is_over() override;
+    bool check_sub_board_win(int row, int col, char player) const;
 };
 
 template <typename T>
@@ -57,9 +58,12 @@ bool UltimateTicTacToe_Board<T>::update_board(int x, int y, T symbol) {
         cout << "Invalid input" << endl;
         return false;
     }
-    this->board[x][y] = toupper(symbol);
-    ++this->n_moves;
-    return true;
+    if (check_sub_board_win(x, y, symbol)) {
+        this->board[x][y] = toupper(symbol);
+        ++this->n_moves;
+        return true;
+    }
+
 }
 
 
@@ -90,6 +94,25 @@ void UltimateTicTacToe_Board<T>::display_board() {
     }
     cout << endl;
 }
+
+template<typename T>
+bool UltimateTicTacToe_Board<T>::check_sub_board_win(int row, int col, char player) const {
+    // Check rows, columns, and diagonals in the specific sub-board
+    for (int i = 0; i < 3; i++) {
+        if (this->board[row][col][i][0] == player && this->board[row][col][i][1] == player && this->board[row][col][i][2] == player)
+            return true; // Row win
+        if (this->board[row][col][0][i] == player && this->board[row][col][1][i] == player && this->board[row][col][2][i] == player)
+            return true; // Column win
+    }
+    // Diagonal wins
+    if (this->board[row][col][0][0] == player && this->board[row][col][1][1] == player && this->board[row][col][2][2] == player)
+        return true;
+    if (this->board[row][col][0][2] == player && this->board[row][col][1][1] == player && this->board[row][col][2][0] == player)
+        return true;
+
+    return false;
+}
+
 
 
 template<typename T>
