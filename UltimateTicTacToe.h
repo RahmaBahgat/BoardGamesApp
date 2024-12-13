@@ -16,7 +16,6 @@ public:
     bool is_win() override;
     bool is_draw() override;
     bool game_is_over() override;
-    bool check_sub_board_win(int row, int col, char player) const;
 };
 
 template <typename T>
@@ -58,19 +57,15 @@ bool UltimateTicTacToe_Board<T>::update_board(int x, int y, T symbol) {
         cout << "Invalid input" << endl;
         return false;
     }
-    if (check_sub_board_win(x, y, symbol)) {
-        this->board[x][y] = toupper(symbol);
-        ++this->n_moves;
-        return true;
-    }
-
+    this->board[x][y] = toupper(symbol);
+    ++this->n_moves;
+    return true;
 }
 
 
 template<typename T>
 void UltimateTicTacToe_Board<T>::display_board() {
     constexpr int sub_board_size = 3; // Each smaller board is 3x3
-    constexpr int ultimate_size = sub_board_size * sub_board_size; // Total size is 9x9
 
     for (int ultimate_row = 0; ultimate_row < sub_board_size; ultimate_row++) {
         for (int sub_row = 0; sub_row < sub_board_size; sub_row++) {
@@ -90,30 +85,10 @@ void UltimateTicTacToe_Board<T>::display_board() {
         }
 
         // Clear separation between sub-board rows
-        cout << string((sub_board_size * (sub_board_size * 8 + 4)), '-') << endl;
+        cout << string((sub_board_size * (sub_board_size * 8 + 4)), ' ') << endl;
     }
     cout << endl;
 }
-
-template<typename T>
-bool UltimateTicTacToe_Board<T>::check_sub_board_win(int row, int col, char player) const {
-    // Check rows, columns, and diagonals in the specific sub-board
-    for (int i = 0; i < 3; i++) {
-        if (this->board[row][col][i][0] == player && this->board[row][col][i][1] == player && this->board[row][col][i][2] == player)
-            return true; // Row win
-        if (this->board[row][col][0][i] == player && this->board[row][col][1][i] == player && this->board[row][col][2][i] == player)
-            return true; // Column win
-    }
-    // Diagonal wins
-    if (this->board[row][col][0][0] == player && this->board[row][col][1][1] == player && this->board[row][col][2][2] == player)
-        return true;
-    if (this->board[row][col][0][2] == player && this->board[row][col][1][1] == player && this->board[row][col][2][0] == player)
-        return true;
-
-    return false;
-}
-
-
 
 template<typename T>
 bool UltimateTicTacToe_Board<T>::is_win() {
@@ -138,7 +113,7 @@ UltimateTicTacToe_Player<T>::UltimateTicTacToe_Player(string name, T symbol) : P
 
 template<typename T>
 void UltimateTicTacToe_Player<T>::getmove(int &x, int &y) {
-    cout << "Please enter the coordinates of the move : (e.g. 0 2)\n";
+    cout << "Please enter the coordinates of the move : (e.g. 0 5)\n";
     cin >> x;
     cin >> y;
     cin.ignore();
