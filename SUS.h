@@ -14,6 +14,8 @@ template <typename T>
 class SUS_Board : public Board<T> {
     Player<T>* players[2];
     int counters[2] = {0, 0}; // Player scores
+    bool completes_SUS(int x, int y, T mark); // New helper function to check if SUS is formed
+    bool check_sequence(int x, int y, char expected); // Helper function to validate cell contents
 
 public:
     SUS_Board();
@@ -25,9 +27,6 @@ public:
     bool game_is_over();
     void display_scores();
 
-private:
-    bool completes_SUS(int x, int y, T mark); // New helper function to check if SUS is formed
-    bool check_sequence(int x, int y, char expected); // Helper function to validate cell contents
 };
 
 template <typename T>
@@ -178,3 +177,4 @@ void SUS_Random_Player<T>::getmove(int& x, int& y) {
 }
 
 #endif //SUS_H
+

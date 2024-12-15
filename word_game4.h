@@ -1,14 +1,14 @@
-#ifndef A2_GAME1_GAME4_H
-#define A2_GAME1_GAME4_H
+#ifndef word_game4_H
+#define word_game4_H
 
 
 #include "BoardGame_Classes.h"
 #include <fstream>
 #include <algorithm>
 template <typename T>
-class X_O_Board:public Board<T> {
+class word_Board:public Board<T> {
 public:
-    X_O_Board ();
+    word_Board ();
     bool update_board (int x , int y , T symbol);
     void display_board () ;
     bool is_win() ;
@@ -18,17 +18,16 @@ public:
 };
 
 template <typename T>
-class X_O_Player : public Player<T> {
+class word_Player : public Player<T> {
 public:
-    X_O_Player (string name, T symbol);
-    X_O_Player(Player<char> name);
+    word_Player (string name, T symbol);
     void getmove(int& x, int& y) ;
 
 };
 template <typename T>
-class X_O_Random_Player : public RandomPlayer<T>{
+class word_Random_Player : public RandomPlayer<T>{
 public:
-    explicit X_O_Random_Player (T symbol);
+    explicit word_Random_Player (T symbol);
     void getmove(int &x, int &y) ;
 };
 
@@ -41,7 +40,7 @@ public:
 using namespace std;
 // Constructor for X_O_Board
 template <typename T>
-X_O_Board<T>::X_O_Board() {
+word_Board<T>::word_Board() {
     this->rows = this->columns = 3;
     this->board = new char*[this->rows];
     for (int i = 0; i < this->rows; i++) {
@@ -54,7 +53,7 @@ X_O_Board<T>::X_O_Board() {
 }
 
 template <typename T>
-bool X_O_Board<T>::update_board(int x, int y, T mark) {
+bool word_Board<T>::update_board(int x, int y, T mark) {
     // Only update if move is valid
     if (!(x < 0 || x >= this->rows || y < 0 || y >= this->columns) && (this->board[x][y] == 0|| mark == 0)) {
         if (mark == 0){
@@ -73,7 +72,7 @@ bool X_O_Board<T>::update_board(int x, int y, T mark) {
 
 // Display the board and the pieces on it
 template <typename T>
-void X_O_Board<T>::display_board() {
+void word_Board<T>::display_board() {
     for (int i = 0; i < this->rows; i++) {
         cout << "\n| ";
         for (int j = 0; j < this->columns; j++) {
@@ -87,7 +86,7 @@ void X_O_Board<T>::display_board() {
 
 
 template <typename T>
-bool X_O_Board<T>::is_win() {
+bool word_Board<T>::is_win() {
     ifstream file("dic.txt");
     if (!file) {
         cerr << "Error: Could not open dictionary file.\n";
@@ -119,7 +118,7 @@ bool X_O_Board<T>::is_win() {
         reverse(rev_column.begin(), rev_column.end());
         // Check if any row or column matches a word in the dictionary
         for (const auto& dict_word : dictionary) {
-            if (row == dict_word || column == dict_word) {
+            if (row == dict_word || column == dict_word || rev_column == dict_word || rev_row == dict_word) {
                 return true;
             }
         }
@@ -133,9 +132,13 @@ bool X_O_Board<T>::is_win() {
         diag2 += toupper(this->board[i][this->columns - i - 1]);
     }
 
+    string rev_diag1 = diag1;
+    reverse(rev_diag1.begin(), rev_diag1.end());
+    string rev_diag2 = diag2;
+    reverse(rev_diag2.begin(), rev_diag2.end());
     // Check if any diagonal matches a word in the dictionary
     for (const auto& dict_word : dictionary) {
-        if (diag1 == dict_word || diag2 == dict_word) {
+        if (diag1 == dict_word || diag2 == dict_word || rev_diag1 == dict_word || rev_diag2 == dict_word) {
             return true;
         }
     }
@@ -145,21 +148,21 @@ bool X_O_Board<T>::is_win() {
 
 // Return true if 9 moves are done and no winner
 template <typename T>
-bool X_O_Board<T>::is_draw() {
+bool word_Board<T>::is_draw() {
     return (this->n_moves == 9 && !is_win());
 }
 
 template <typename T>
-bool X_O_Board<T>::game_is_over() {
+bool word_Board<T>::game_is_over() {
     return is_win() || is_draw();
 }
 
 // Constructor for X_O_Player
 template <typename T>
-X_O_Player<T>::X_O_Player(string name, T symbol) : Player<T>(name, symbol) {}
+word_Player<T>::word_Player(string name, T symbol) : Player<T>(name, symbol) {}
 
 template <typename T>
-void X_O_Player<T>::getmove(int& x, int& y) {
+void word_Player<T>::getmove(int& x, int& y) {
     char ch;
     cout << "\nPlease enter your move x and y (0 to 2) separated by spaces: ";
     cin >> x >> y;
@@ -170,18 +173,18 @@ void X_O_Player<T>::getmove(int& x, int& y) {
 }
 
 template <typename T>
-X_O_Random_Player<T>::X_O_Random_Player(T symbol) : RandomPlayer<T>(symbol) {
+word_Random_Player<T>::word_Random_Player(T symbol) : RandomPlayer<T>(symbol) {
     this->dimension = 3;
     this->name = "Random Computer Player";
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
 }
 
 template <typename T>
-void X_O_Random_Player<T>::getmove(int& x, int& y) {
+void word_Random_Player<T>::getmove(int& x, int& y) {
     char ch;
     x = rand() % this->dimension;  // Random number between 0 and 2
     y = rand() % this->dimension;
     ch = 'A' + rand() % 26;// Random uppercase character between 'A' and 'Z'
     this->symbol = ch;
 }
-#endif
+#endif //word_game4_H

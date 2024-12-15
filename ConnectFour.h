@@ -16,6 +16,7 @@ public:
     bool is_win() override;
     bool is_draw() override;
     bool game_is_over() override;
+
 };
 
 template <typename T>
@@ -54,6 +55,35 @@ ConnectFourBoard<T>::ConnectFourBoard() {
 
 template<typename T>
 bool ConnectFourBoard<T>::update_board(int x, int y, T symbol) {
+    //AI Handling
+    if (symbol == 'A' || symbol == 'I') {
+        if ( x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != ' ') {
+            return false;
+        }
+        for (int i = this -> rows - 1 ; i >= 0; --i) {//Must start from the bottom so for the fiven col chechk the rows from down
+            if(this->board[i][y] == ' ') {
+                if (x != i ) {
+                    return false;
+                }
+                if (x == i) {
+                    this->board[x][y] = toupper(symbol);
+                    ++this->n_moves;
+                    return true;
+                }
+            }
+        }
+
+        if (symbol == 'A') {
+            this->board[x][y] = 'X';
+        }
+        if (symbol == 'I') {
+            this->board[x][y] = 'O';
+        }
+        ++this->n_moves;
+        return true;
+    }
+
+    //Human & Random
     if ( x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != ' ') {
         cout << "Invalid input" << endl;
         return false;
@@ -193,6 +223,7 @@ void ConnectFourPlayer<T>::getmove(int &x, int &y) {
     cin >> y;
     cin.ignore();
 }
+
 template<typename T>
 ConnectFourRandomPlayer<T>::ConnectFourRandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator

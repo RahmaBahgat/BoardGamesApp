@@ -2,7 +2,6 @@
 #define _BOARDGAME_CLASSES_H
 
 #include <string>
-#include <vector>
 using namespace std;
 /*
 rows: the number of rows in the board

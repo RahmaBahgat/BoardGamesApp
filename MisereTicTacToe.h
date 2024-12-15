@@ -4,7 +4,7 @@
 #include "BoardGame_Classes.h"
 
 template <typename T>
-class X_O_Board : public Board<T> {
+class X_O_Board__ : public Board<T> {
 public:
     X_O_Board();
     bool update_board(int x, int y, T symbol);
@@ -15,16 +15,16 @@ public:
 };
 
 template <typename T>
-class X_O_Player : public Player<T> {
+class X_O_Player__ : public Player<T> {
 public:
-    X_O_Player(string name, T symbol);
+    X_O_Player__(string name, T symbol);
     void getmove(int& x, int& y);
 };
 
 template <typename T>
-class X_O_Random_Player : public RandomPlayer<T> {
+class X_O_Random_Player__ : public RandomPlayer<T> {
 public:
-    X_O_Random_Player(T symbol);
+    X_O_Random_Player__(T symbol);
     void getmove(int& x, int& y);
 };
 
@@ -38,7 +38,7 @@ using namespace std;
 
 // Constructor for X_O_Board
 template <typename T>
-X_O_Board<T>::X_O_Board() {
+X_O_Board__<T>::X_O_Board__() {
     this->rows = this->columns = 3;
     this->board = new char*[this->rows];
     for (int i = 0; i < this->rows; i++) {
@@ -51,7 +51,7 @@ X_O_Board<T>::X_O_Board() {
 }
 
 template <typename T>
-bool X_O_Board<T>::update_board(int x, int y, T mark) {
+bool X_O_Board__<T>::update_board(int x, int y, T mark) {
     // Only update if move is valid
     if (!(x < 0 || x >= this->rows || y < 0 || y >= this->columns) && (this->board[x][y] == 0)) {
         this->n_moves++;
@@ -63,7 +63,7 @@ bool X_O_Board<T>::update_board(int x, int y, T mark) {
 
 // Display the board and the pieces on it
 template <typename T>
-void X_O_Board<T>::display_board() {
+void X_O_Board__<T>::display_board() {
     for (int i = 0; i < this->rows; i++) {
         cout << "\n| ";
         for (int j = 0; j < this->columns; j++) {
@@ -77,7 +77,7 @@ void X_O_Board<T>::display_board() {
 
 // Misere Tic Tac Toe: A player loses if they complete a row, column, or diagonal
 template <typename T>
-bool X_O_Board<T>::is_win() {
+bool X_O_Board__<T>::is_win() {
     // Check rows and columns for a winning line
     for (int i = 0; i < this->rows; i++) {
         if ((this->board[i][0] == this->board[i][1] && this->board[i][1] == this->board[i][2] && this->board[i][0] != 0) ||
@@ -97,13 +97,13 @@ bool X_O_Board<T>::is_win() {
 
 // Return true if 9 moves are done and no winner
 template <typename T>
-bool X_O_Board<T>::is_draw() {
+bool X_O_Board__<T>::is_draw() {
     return (this->n_moves == 9 && !is_win());
 }
 
 // Check if the game is over (win or draw)
 template <typename T>
-bool X_O_Board<T>::game_is_over() {
+bool X_O_Board__<T>::game_is_over() {
     return is_win() || is_draw();
 }
 
@@ -111,24 +111,24 @@ bool X_O_Board<T>::game_is_over() {
 
 // Constructor for X_O_Player
 template <typename T>
-X_O_Player<T>::X_O_Player(string name, T symbol) : Player<T>(name, symbol) {}
+X_O_Player__<T>::X_O_Player__(string name, T symbol) : Player<T>(name, symbol) {}
 
 template <typename T>
-void X_O_Player<T>::getmove(int& x, int& y) {
+void X_O_Player__<T>::getmove(int& x, int& y) {
     cout << "\nPlease enter your move x and y (0 to 2) separated by spaces: ";
     cin >> x >> y;
 }
 
 // Constructor for X_O_Random_Player
 template <typename T>
-X_O_Random_Player<T>::X_O_Random_Player(T symbol) : RandomPlayer<T>(symbol) {
+X_O_Random_Player__<T>::X_O_Random_Player__(T symbol) : RandomPlayer<T>(symbol) {
     this->dimension = 3;
     this->name = "Random Computer Player";
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
 }
 
 template <typename T>
-void X_O_Random_Player<T>::getmove(int& x, int& y) {
+void X_O_Random_Player__<T>::getmove(int& x, int& y) {
     x = rand() % this->dimension;  // Random number between 0 and 2
     y = rand() % this->dimension;
 }

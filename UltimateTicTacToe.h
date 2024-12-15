@@ -1,134 +1,134 @@
-//
-// Created by MALAK on 12/13/2024.
-//
+#ifndef ULTIMATE_TIC_TAC_TOE_H
+#define ULTIMATE_TIC_TAC_TOE_H
 
-#ifndef ULTIMATETICTACTOE_H
-#define ULTIMATETICTACTOE_H
 #include "BoardGame_Classes.h"
+#include <iostream>
+#include <cctype>
+#include <cstdlib>
+#include <ctime>
 
-template<typename T>
-class UltimateTicTacToe_Board : public Board<T> {
-public:
-    UltimateTicTacToe_Board();
-    // ~UltimateTicTacToe_Board(); // Destructor for cleanup
-    bool update_board(int x, int y, T symbol) override;
-    void display_board() override;
-    bool is_win() override;
-    bool is_draw() override;
-    bool game_is_over() override;
-};
+class X_O_Board_ : public Board<char> {
+    char board[9][9]; // 9x9 board for ultimate tic-tac-toe
+    int moves = 0;
+    int gridOwners[3][3] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}}; // -1: unclaimed, 0: X, 1: O
 
-template <typename T>
-class UltimateTicTacToe_Player : public Player<T> {
-public:
-    UltimateTicTacToe_Player (string name , T symbol);
-    void getmove(int& x, int& y) override;
-};
-
-template <typename T>
-class UltimateTicTacToe_RandomPlayer : public RandomPlayer<T> {
-public:
-
-    UltimateTicTacToe_RandomPlayer (T symbol);
-    void getmove(int& x, int& y) override;
-};
-
-//------------- IMPLEMENTATION-------------------------------------------------------------------------------------
-
-#include <bits/stdc++.h>
-using namespace std;
-
-//Constructor for NumericalTicTacToe board
-template<typename T>
-UltimateTicTacToe_Board<T>::UltimateTicTacToe_Board() {
-    this->columns = 9;
-    this->rows = 9;
-    this->board = new char*[this->rows];
-    for (int i = 0; i < this->rows; i++) {
-        this->board[i] = new char[this->columns]{' '};
-    }
-    this->n_moves = 0;
-
-}
-
-template<typename T>
-bool UltimateTicTacToe_Board<T>::update_board(int x, int y, T symbol) {
-    if ( x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != ' ') {
-        cout << "Invalid input" << endl;
+    bool check_win_in_grid(int startRow, int startCol, char symbol) {
+        for (int i = 0; i < 3; ++i) {
+            if ((board[startRow + i][startCol] == symbol &&
+                 board[startRow + i][startCol + 1] == symbol &&
+                 board[startRow + i][startCol + 2] == symbol) ||
+                (board[startRow][startCol + i] == symbol &&
+                 board[startRow + 1][startCol + i] == symbol &&
+                 board[startRow + 2][startCol + i] == symbol)) {
+                return true;
+            }
+        }
+        if ((board[startRow][startCol] == symbol &&
+             board[startRow + 1][startCol + 1] == symbol &&
+             board[startRow + 2][startCol + 2] == symbol) ||
+            (board[startRow][startCol + 2] == symbol &&
+             board[startRow + 1][startCol + 1] == symbol &&
+             board[startRow + 2][startCol] == symbol)) {
+            return true;
+        }
         return false;
     }
-    this->board[x][y] = toupper(symbol);
-    ++this->n_moves;
-    return true;
-}
 
-
-template<typename T>
-void UltimateTicTacToe_Board<T>::display_board() {
-    constexpr int sub_board_size = 3; // Each smaller board is 3x3
-
-    for (int ultimate_row = 0; ultimate_row < sub_board_size; ultimate_row++) {
-        for (int sub_row = 0; sub_row < sub_board_size; sub_row++) {
-            for (int ultimate_col = 0; ultimate_col < sub_board_size; ultimate_col++) {
-                cout << "|";
-                for (int sub_col = 0; sub_col < sub_board_size; sub_col++) {
-                    // Map the smaller board's indices to the ultimate board's index
-                    int i = ultimate_row * sub_board_size + sub_row;
-                    int j = ultimate_col * sub_board_size + sub_col;
-
-                    // Print each cell with indices
-                    cout << " [" << i << "," << j << "]  ";
-                }
-                cout << " | ";
+    bool check_three_grids_in_a_row(int player) {
+        // Check rows and columns
+        for (int i = 0; i < 3; ++i) {
+            if ((gridOwners[i][0] == player && gridOwners[i][1] == player && gridOwners[i][2] == player) ||
+                (gridOwners[0][i] == player && gridOwners[1][i] == player && gridOwners[2][i] == player)) {
+                return true;
             }
-            cout << endl; // End of a sub-row within the ultimate board
         }
-
-        // Clear separation between sub-board rows
-        cout << string((sub_board_size * (sub_board_size * 8 + 4)), ' ') << endl;
+        // Check diagonals
+        if ((gridOwners[0][0] == player && gridOwners[1][1] == player && gridOwners[2][2] == player) ||
+            (gridOwners[0][2] == player && gridOwners[1][1] == player && gridOwners[2][0] == player)) {
+            return true;
+        }
+        return false;
     }
-    cout << endl;
-}
 
-template<typename T>
-bool UltimateTicTacToe_Board<T>::is_win() {
-    return false;
-}
+public:
+    X_O_Board_() {
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                board[i][j] = ' ';
+            }
+        }
+    }
 
-template<typename T>
-bool UltimateTicTacToe_Board<T>::is_draw() {
-    return this-> n_moves == 9 * 9 && !is_win();
-}
+    bool update_board(int x, int y, char symbol) override {
+        if (x < 0 || x >= 9 || y < 0 || y >= 9 || board[x][y] != ' ') {
+            return false;
+        }
+        board[x][y] = toupper(symbol);
+        moves++;
 
-template<typename T>
-bool UltimateTicTacToe_Board<T>::game_is_over() {
-    return is_win() || is_draw();
-}
+        // Update grid owner if a 3x3 grid is won
+        int gridRow = x / 3;
+        int gridCol = y / 3;
+        if (gridOwners[gridRow][gridCol] == -1 && check_win_in_grid(gridRow * 3, gridCol * 3, toupper(symbol))) {
+            gridOwners[gridRow][gridCol] = (toupper(symbol) == 'X') ? 0 : 1;
+        }
+        return true;
+    }
 
-//--------------------------------------------------------------------------------------
+    void display_board() override {
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                std::cout << "(" << i << "," << j << ")";
+                if (board[i][j] != ' ') {
+                    std::cout << board[i][j];
+                }
+                if ((j + 1) % 3 == 0 && j != 8) std::cout << " | ";
+            }
+            std::cout << "\n";
+            if ((i + 1) % 3 == 0 && i != 8)
+                std::cout << "------------------------------------------------\n";
+        }
+        std::cout << "\n";
+    }
 
+    bool is_win_for_player(int player) {
+        return check_three_grids_in_a_row(player);
+    }
 
-template<typename T>
-UltimateTicTacToe_Player<T>::UltimateTicTacToe_Player(string name, T symbol) : Player<T>(name, symbol) {}
+    bool is_win() override {
+        return is_win_for_player(0) || is_win_for_player(1);
+    }
 
-template<typename T>
-void UltimateTicTacToe_Player<T>::getmove(int &x, int &y) {
-    cout << "Please enter the coordinates of the move : (e.g. 0 5)\n";
-    cin >> x;
-    cin >> y;
-    cin.ignore();
-}
+    bool is_draw() override {
+        return moves == 81;
+    }
 
-template<typename T>
-UltimateTicTacToe_RandomPlayer<T>::UltimateTicTacToe_RandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
-    srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
+    bool game_is_over() override {
+        return is_win_for_player(0) || is_win_for_player(1) || is_draw();
+    }
+};
 
-}
+class X_O_Player_ : public Player<char> {
+public:
+    X_O_Player_(const std::string& name, char symbol) : Player<char>(name, symbol) {}
 
-template<typename T>
-void UltimateTicTacToe_RandomPlayer<T>::getmove(int &x, int &y) {
-    x = rand() % 9;  // Random number between 0 and 8
-    y = rand() % 9;  // Random number between 0 and 8
+    void getmove(int& x, int& y) override {
+        std::cout << this->getname() << "'s turn (" << this->getsymbol() << "). Enter row and column: ";
+        std::cin >> x >> y;
+    }
+};
 
-}
-#endif //ULTIMATETICTACTOE_H
+class X_O_Random_Player_ : public Player<char> {
+public:
+    X_O_Random_Player_(char symbol) : Player("Random Computer", symbol) {
+        std::srand(std::time(nullptr));
+    }
+
+    void getmove(int& x, int& y) override {
+        x = std::rand() % 9;
+        y = std::rand() % 9;
+        std::cout << this->getname() << " chooses (" << x << ", " << y << ").\n";
+    }
+};
+
+#endif //ULTIMATE_TIC_TAC_TOE_H
