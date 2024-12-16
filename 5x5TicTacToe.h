@@ -1,7 +1,7 @@
 #ifndef FIVE_BY_FIVE_TICTACTOE_H
 #define FIVE_BY_FIVE_TICTACTOE_H
 
-// Including necessary header files
+
 #include "BoardGame_Classes.h"
 #include <iostream>
 #include <iomanip>
@@ -26,7 +26,7 @@ public:
 template <typename T>
 class TicTacToePlayer : public Player<T> {
 public:
-    TicTacToePlayer(string name, T symbol); // Constructor to initialize player with a name and symbol
+    TicTacToePlayer(string name, T symbol);
     void getmove(int& x, int& y) override; // Function to get the player's move (coordinates)
 };
 
@@ -34,7 +34,7 @@ public:
 template <typename T>
 class TicTacToeRandomPlayer : public RandomPlayer<T> {
 public:
-    TicTacToeRandomPlayer(T symbol); // Constructor to initialize random player with a symbol
+    TicTacToeRandomPlayer(T symbol); 
     void getmove(int& x, int& y) override; // Function to generate random move
 };
 
