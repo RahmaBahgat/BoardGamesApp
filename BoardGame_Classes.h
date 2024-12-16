@@ -17,7 +17,9 @@ protected:
     T** board; //dynamic allocation (**)
     int n_moves = 0; //Useful for win/draw logic.
 
-public://pure virtual methods:
+public:
+
+    //pure virtual methods:
     /// Return true if move is valid and put it on the board
     /// within board boundaries in an empty cell
     /// Return false otherwise
@@ -52,6 +54,8 @@ Allows players to interact with any board without copying it
 Flexibility for games with different board implementations
 */
 public:
+    virtual ~Player() = default;
+
     /// Two constructors to initiate players
     /// Give the player a symbol to use in playing
     /// It can be X, O, or others
