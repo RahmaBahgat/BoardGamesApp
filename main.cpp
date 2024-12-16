@@ -88,7 +88,7 @@ int getValidChoice() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input. Please enter a number.\n";
         }
-        else if (choice >= 0 && choice <= 8) {
+        else if (choice >= 0 && choice <= 9) {
             return choice;  // Valid input
         }
         else {
@@ -112,7 +112,7 @@ int main() {
         cout << "6- Misere Tic Tac Toe\n";
         cout << "7- Tic Tac Toe\n";
         cout << "8- Ultimate Tic Tac Toe\n";
-        cout << "8- SUS\n";
+        cout << "9- SUS\n";
 
         // Get the user's choice
         int choice = getValidChoice();
