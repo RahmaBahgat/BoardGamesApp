@@ -1,6 +1,6 @@
-//
-// Created by pc on 02-12-2024.
-//
+/*
+ * Created by pc on 02-12-2024.
+ */
 #ifndef A2_GAME1_GAME1_H
 #define A2_GAME1_GAME1_H
 
@@ -10,36 +10,43 @@
 #include "BoardGame_Classes.h"
 using namespace std;
 
+// Class representing a Pyramid X-O Board
+// Derived from Board<T>
 template <typename T>
 class pyramid_X_O_Board:public Board<T> {
 public:
-    pyramid_X_O_Board ();
-    bool update_board (int x , int y , T mark);
-    void display_board () ;
-    bool is_win() ;
-    bool is_draw();
-    bool game_is_over();
+    pyramid_X_O_Board (); // Constructor to initialize the board
+    bool update_board (int x , int y , T mark); // Updates the board with a move
+    void display_board () ; // Displays the current state of the board
+    bool is_win() ; // Checks if there is a winning condition
+    bool is_draw(); // Checks if the game is a draw
+    bool game_is_over(); // Checks if the game is over
 
 };
 
+// Class representing a Player for Pyramid X-O
+// Derived from Player<T>
 template <typename T>
 class pyramid_X_O_Player : public Player<T> {
 public:
-    pyramid_X_O_Player (string name, T symbol);
-    void getmove(int& x, int& y) ;
+    pyramid_X_O_Player (string name, T symbol); // Constructor to initialize player with name and symbol
+    void getmove(int& x, int& y) ; // Prompts the player for their move
 
 };
 
+// Class representing a Random Player for Pyramid X-O
+// Derived from RandomPlayer<T>
 template <typename T>
 class pyramid_X_O_Random_Player : public RandomPlayer<T>{
 public:
-    explicit pyramid_X_O_Random_Player (T symbol);
-    void getmove(int &x, int &y) ;
+    explicit pyramid_X_O_Random_Player (T symbol); // Constructor to initialize with a symbol
+    void getmove(int &x, int &y) ; // Generates a random move
 };
 
 //------------------------------------------------------------------------IMPLEMENTATION
 
 // Constructor for pyramid_X_O_Board
+// Initializes the board with 3 rows and 5 columns
 template <typename T>
 pyramid_X_O_Board<T>::pyramid_X_O_Board() {
     this->rows = 3;
@@ -54,6 +61,7 @@ pyramid_X_O_Board<T>::pyramid_X_O_Board() {
     this->n_moves = 0;
 }
 
+// Updates the board with a player's move
 template <typename T>
 bool pyramid_X_O_Board<T>::update_board(int x, int y, T mark) {
     // Only update if move is valid
@@ -62,11 +70,11 @@ bool pyramid_X_O_Board<T>::update_board(int x, int y, T mark) {
          (x == 2 && y >= 0 && y <= 4)) && (this->board[x][y] == 0|| mark == 0)) {
         if (mark == 0){
             this->n_moves--;
-            this->board[x][y] = 0;
+            this->board[x][y] = 0; // Reset the cell
         }
         else {
             this->n_moves++;
-            this->board[x][y] = toupper(mark);
+            this->board[x][y] = toupper(mark); // Update the cell with the player's mark
         }
 
         return true;
@@ -74,6 +82,7 @@ bool pyramid_X_O_Board<T>::update_board(int x, int y, T mark) {
     return false;
 }
 
+// Displays the board with formatting
 template <typename T>
 void pyramid_X_O_Board<T>::display_board() {
     for (int i = 0; i < this->rows; i++) {
@@ -99,7 +108,7 @@ void pyramid_X_O_Board<T>::display_board() {
     cout << endl << endl;
 }
 
-// Returns true if there is any winner
+// Checks if there is any winner
 template <typename T>
 bool pyramid_X_O_Board<T>::is_win() {
     // Check rows and columns
@@ -123,22 +132,24 @@ bool pyramid_X_O_Board<T>::is_win() {
     return false;
 }
 
-// Return true if 9 moves are done and no winner
+// Checks if the game is a draw
 template <typename T>
 bool pyramid_X_O_Board<T>::is_draw() {
     return (this->n_moves == 9 && !is_win());
 }
 
+// Checks if the game is over (either win or draw)
 template <typename T>
 bool pyramid_X_O_Board<T>::game_is_over() {
     return is_win() || is_draw();
 }
 
-
 // Constructor for pyramid_X_O_Player
+// Initializes the player with their name and symbol
 template <typename T>
 pyramid_X_O_Player<T>::pyramid_X_O_Player(string name, T symbol) : Player<T>(name, symbol) {}
 
+// Prompts the player for their move
 template <typename T>
 void pyramid_X_O_Player<T>::getmove(int& x, int& y) {
     cout << "\nPlease enter your move x and y (0 to 2) separated by spaces: ";
@@ -146,6 +157,7 @@ void pyramid_X_O_Player<T>::getmove(int& x, int& y) {
 }
 
 // Constructor for pyramid_X_O_Random_Player
+// Initializes a random player with their symbol and default name
 template <typename T>
 pyramid_X_O_Random_Player<T>::pyramid_X_O_Random_Player(T symbol) : RandomPlayer<T>(symbol) {
     this->dimension = 3;
@@ -153,9 +165,11 @@ pyramid_X_O_Random_Player<T>::pyramid_X_O_Random_Player(T symbol) : RandomPlayer
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator
 }
 
+// Generates a random move for the player
 template <typename T>
 void pyramid_X_O_Random_Player<T>::getmove(int& x, int& y) {
     x = rand() % this->dimension;  // Random number between 0 and 2
     y = rand() % this->dimension;
 }
+
 #endif //A2_GAME1_GAME1_H
