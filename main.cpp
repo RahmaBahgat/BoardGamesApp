@@ -137,62 +137,49 @@ void mainG1() {
     int choice;
     Player<char>* players[2] = {nullptr, nullptr};
     auto* board = new pyramid_X_O_Board<char>();
-    string playerXName, player2Name;
-    cout << "Welcome to Pyramid Tic-Tac-Toe :)\n";
+    string player1Name, player2Name;
+    cout << "\n\nWelcome to Pyramid Tic-Tac-Toe :)\n";
 
     // Set up Player 1
-    cout << "Enter Player X name: ";
-    cin >> playerXName;
-    cout << "Choose Player X type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
+    do {
+        cout << "Choose Player 1 type:\n";
+        cout << "1. Human\n";
+        cout << "2. Random Computer\n";
+        cin >> choice;
 
-    if (cin.fail() || choice < 1 || choice > 3) {
-        cout << "Invalid choice for Player 1. Exiting the game.\n";
-        delete board;
-        return;  // Exit the function without returning a value (since it's void)
-    }
-
-    switch (choice) {
-        case 1:
-            players[0] = new pyramid_X_O_Player<char>(playerXName, 'X');
-            break;
-        case 2:
+        if (choice == 1) {
+            cout << "Enter Player 1 name: ";
+            cin >> player1Name;
+            players[0] = new pyramid_X_O_Player<char>(player1Name, 'X');
+        } else if (choice == 2) {
             players[0] = new pyramid_X_O_Random_Player<char>('X');
-            break;
-    }
+        } else {
+            cout << "Invalid choice for Player 1. Please enter 1 or 2.\n";
+        }
+    } while (choice != 1 && choice != 2);
 
     // Set up Player 2
-    cout << "Enter Player 2 name: ";
-    cin >> player2Name;
-    cout << "Choose Player 2 type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
+    do {
+        cout << "Choose Player 2 type:\n";
+        cout << "1. Human\n";
+        cout << "2. Random Computer\n";
+        cin >> choice;
 
-    if (cin.fail() || choice < 1 || choice > 3) {
-        cout << "Invalid choice for Player 2. Exiting the game.\n";
-        delete players[0];  // Clean up memory before exiting
-        delete board;
-        return;
-    }
-
-    switch (choice) {
-        case 1:
-            players[1] = new pyramid_X_O_Player<char>(player2Name, 'O');
-            break;
-        case 2:
+        if (choice == 1) {
+            cout << "Enter Player 2 name: ";
+            cin >> player1Name;
+            players[1] = new pyramid_X_O_Player<char>(player1Name, 'O');
+        } else if (choice == 2) {
             players[1] = new pyramid_X_O_Random_Player<char>('O');
-            break;
-    }
+        } else {
+            cout << "Invalid choice for Player 2. Please enter 1 or 2.\n";
+        }
+    } while (choice != 1 && choice != 2);
 
-
+    cout << "\nGame setup complete. Ready to play!\n";
     // Create the game manager and run the game
     GameManager<char> x_o_game(board, players);
     x_o_game.run();
-    // Game logic here (if applicable)
-    cout << "Game setup complete. Ready to play!\n";
 
     // Clean up memory
     delete players[0];
@@ -329,63 +316,51 @@ void mainG4(){
     int choice;
     Player<char>* players[2] = {nullptr, nullptr};
     auto* board = new word_Board<char>();
-    string playerXName, player2Name;
+    string player1Name, player2Name;
 
-    cout << "Welcome to Word Tic-Tac-Toe :)\n";
+    cout << "\nWelcome to Word Tic-Tac-Toe :)\n";
 
     // Set up Player 1
-    cout << "Enter Player X name: ";
-    cin >> playerXName;
-    cout << "Choose Player X type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
+    do {
+        cout << "Choose Player 1 type:\n";
+        cout << "1. Human\n";
+        cout << "2. Random Computer\n";
+        cin >> choice;
 
-    if (cin.fail() || choice < 1 || choice > 3) {
-        cout << "Invalid choice for Player 1. Exiting the game.\n";
-        delete board;
-        return;  // Exit the function without returning a value (since it's void)
-    }
+        if (choice == 1) {
+            cout << "Enter Player 1 name: ";
+            cin >> player1Name;
+            players[0] = new word_Player<char>(player1Name, 'X');
+        } else if (choice == 2) {
+            players[0] = new word_Random_Player<char>('O');
+        } else {
+            cout << "Invalid choice for Player 1. Please enter 1 or 2.\n";
+        }
+    } while (choice != 1 && choice != 2);
 
-    switch (choice) {
-        case 1:
-            players[0] = new word_Player<char>(playerXName, 'X');
-            break;
-        case 2:
-            players[0] = new word_Random_Player<char>('X');
-            break;
-
-    }
 
     // Set up Player 2
-    cout << "Enter Player 2 name: ";
-    cin >> player2Name;
-    cout << "Choose Player 2 type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
+    do {
+        cout << "Choose Player 2 type:\n";
+        cout << "1. Human\n";
+        cout << "2. Random Computer\n";
+        cin >> choice;
 
-    if (cin.fail() || choice < 1 || choice > 3) {
-        cout << "Invalid choice for Player 2. Exiting the game.\n";
-        delete players[0];  // Clean up memory before exiting
-        delete board;
-        return;
-    }
-
-    switch (choice) {
-        case 1:
-            players[1] = new word_Player<char>(player2Name, 'O');
-            break;
-        case 2:
+        if (choice == 1) {
+            cout << "Enter Player 2 name: ";
+            cin >> player1Name;
+            players[1] = new word_Player<char>(player1Name, 'O');
+        } else if (choice == 2) {
             players[1] = new word_Random_Player<char>('O');
-            break;
-    }
-
+        } else {
+            cout << "Invalid choice for Player 2. Please enter 1 or 2.\n";
+        }
+    } while (choice != 1 && choice != 2);
+    // Game logic here (if applicable)
+    cout << "Game setup complete. Ready to play!\n";
     // Create the game manager and run the game
     GameManager<char> x_o_game(board, players);
     x_o_game.run();
-    // Game logic here (if applicable)
-    cout << "Game setup complete. Ready to play!\n";
 
     // Clean up memory
     delete players[0];
