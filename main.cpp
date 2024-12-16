@@ -547,7 +547,7 @@ void mainG8() {
     Player<char>* players[2] = {nullptr, nullptr};
     auto* board = new X_O_Board(); // Instantiate the multi-board implementation
     string playerXName, playerOName;
-    cout << "Welcome to Ultimate Tic-Tac-Toe :)\n";
+    cout << "\nWelcome to Ultimate Tic-Tac-Toe :)\n";
     // Set up Player X
     cout << "Enter Player X name: ";
     cin >> playerXName;
@@ -611,7 +611,7 @@ void mainG9() {
     SUS_Board<char>* board = new SUS_Board<char>();
     string player1Name, player2Name;
 
-    cout << "Welcome to the FCAI SUS Game!\n";
+    cout << "\nWelcome to the FCAI SUS Game!\n";
 
     // Player 1 setup
     cout << "Enter Player 1 name: ";
