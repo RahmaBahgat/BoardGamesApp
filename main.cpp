@@ -129,130 +129,9 @@ int main() {
 
     return 0;
 }
-void mainG6(){
-    int choice;
-    Player<char>* players[2];
-    Misere_Board<char>* B = new Misere_Board<char>();
-    string playerXName, player2Name;
 
-    cout << "Welcome to Misere Tic Tac Toe Game. :)\n";
 
-    // Set up player 1
-    cout << "Enter Player X name: ";
-    cin >> playerXName;
-    cout << "Choose Player X type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
 
-    switch(choice) {
-        case 1:
-            players[0] = new Misere_Player<char>(playerXName, 'X');
-            break;
-        case 2:
-            players[0] = new Misere_Random_Player<char>('X');
-            break;
-        default:
-            cout << "Invalid choice for Player 1. Exiting the game.\n";
-            return ;
-    }
-
-    // Set up player 2
-    cout << "Enter Player 2 name: ";
-    cin >> player2Name;
-    cout << "Choose Player 2 type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
-
-    switch(choice) {
-        case 1:
-            players[1] = new Misere_Player<char>(player2Name, 'O');
-            break;
-        case 2:
-            players[1] = new Misere_Random_Player<char>('O');
-            break;
-        default:
-            cout << "Invalid choice for Player 2. Exiting the game.\n";
-            return ;
-    }
-
-    // Create the Misere game manager and run the game
-    MisereGameManager<char> x_o_game(B, players);
-    x_o_game.run();
-
-    // Clean up
-    delete B;
-    for (int i = 0; i < 2; ++i) {
-        delete players[i];
-    }
-    return ;
-}
-
-void mainG3(){
-    int choice;
-    Player<char>* players[2];
-    fiveByFiveTicTacToeBoard<char>* B = new fiveByFiveTicTacToeBoard<char>(); // Create a 5x5 board
-    string playerXName, playerOName;
-
-    cout << "Welcome to 5x5 Tic Tac Toe Game. :)\n";
-
-    // Set up Player X
-    cout << "Enter Player X name: ";
-    cin >> playerXName;
-    cout << "Choose Player X type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
-
-    switch (choice) {
-        case 1:
-            players[0] = new TicTacToePlayer<char>(playerXName, 'X');
-            break;
-        case 2:
-            players[0] = new TicTacToeRandomPlayer<char>('X');
-            break;
-        default:
-            cout << "Invalid choice for Player X. Exiting the game.\n";
-            return ;
-    }
-
-    // Set up Player O
-    cout << "Enter Player O name: ";
-    cin >> playerOName;
-    cout << "Choose Player O type:\n";
-    cout << "1. Human\n";
-    cout << "2. Random Computer\n";
-    cin >> choice;
-
-    switch (choice) {
-        case 1:
-            players[1] = new TicTacToePlayer<char>(playerOName, 'O');
-            break;
-        case 2:
-            players[1] = new TicTacToeRandomPlayer<char>('O');
-            break;
-        default:
-            cout << "Invalid choice for Player O. Exiting the game.\n";
-            return ;
-    }
-
-    // Set the board pointer for players
-    players[0]->setBoard(B);
-    players[1]->setBoard(B);
-
-    // Create the game manager and run the game
-    GameManager5x5<char> ttt_game(B, players);
-    ttt_game.run();
-
-    // Clean up
-    delete B;
-    for (int i = 0; i < 2; ++i) {
-        delete players[i];
-    }
-
-    return ;
-}
 //Game 1 : Made by Basmala
 void mainG1() {
     int choice;
@@ -380,69 +259,70 @@ void mainG2() {
 
 
 //Game 3 : Made by Rahma
-// void mainG3() {
-//     int choice;
-//     Player<char>* players[2];
-//     fiveByFiveTicTacToeBoard<char>* B = new fiveByFiveTicTacToeBoard<char>(); // Create a 5x5 board
-//     string playerXName, playerOName;
-//
-//     cout << "Welcome to 5x5 Tic Tac Toe Game. :)\n";
-//
-//     // Set up Player X
-//     cout << "Enter Player X name: ";
-//     cin >> playerXName;
-//     cout << "Choose Player X type:\n";
-//     cout << "1. Human\n";
-//     cout << "2. Random Computer\n";
-//     cin >> choice;
-//
-//     switch (choice) {
-//         case 1:
-//             players[0] = new TicTacToePlayer<char>(playerXName, 'X');
-//         break;
-//         case 2:
-//             players[0] = new TicTacToeRandomPlayer<char>('X');
-//         break;
-//         default:
-//             cout << "Invalid choice for Player X. Exiting the game.\n";
-//         return ;
-//     }
-//
-//     // Set up Player O
-//     cout << "Enter Player O name: ";
-//     cin >> playerOName;
-//     cout << "Choose Player O type:\n";
-//     cout << "1. Human\n";
-//     cout << "2. Random Computer\n";
-//     cin >> choice;
-//
-//     switch (choice) {
-//         case 1:
-//             players[1] = new TicTacToePlayer<char>(playerOName, 'O');
-//         break;
-//         case 2:
-//             players[1] = new TicTacToeRandomPlayer<char>('O');
-//         break;
-//         default:
-//             cout << "Invalid choice for Player O. Exiting the game.\n";
-//         return ;
-//     }
-//
-//     // Set the board pointer for players
-//     players[0]->setBoard(B);
-//     players[1]->setBoard(B);
-//
-//     // Create the game manager and run the game
-//     GameManager5x5<char> ttt_game(B, players);
-//     ttt_game.run();
-//
-//     // Clean up
-//     delete B;
-//     for (int i = 0; i < 2; ++i) {
-//         delete players[i];
-//     }
-//
-// }
+void mainG3(){
+    int choice;
+    Player<char>* players[2];
+    fiveByFiveTicTacToeBoard<char>* B = new fiveByFiveTicTacToeBoard<char>(); // Create a 5x5 board
+    string playerXName, playerOName;
+
+    cout << "Welcome to 5x5 Tic Tac Toe Game. :)\n";
+
+    // Set up Player X
+    cout << "Enter Player X name: ";
+    cin >> playerXName;
+    cout << "Choose Player X type:\n";
+    cout << "1. Human\n";
+    cout << "2. Random Computer\n";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            players[0] = new TicTacToePlayer<char>(playerXName, 'X');
+            break;
+        case 2:
+            players[0] = new TicTacToeRandomPlayer<char>('X');
+            break;
+        default:
+            cout << "Invalid choice for Player X. Exiting the game.\n";
+            return ;
+    }
+
+    // Set up Player O
+    cout << "Enter Player O name: ";
+    cin >> playerOName;
+    cout << "Choose Player O type:\n";
+    cout << "1. Human\n";
+    cout << "2. Random Computer\n";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            players[1] = new TicTacToePlayer<char>(playerOName, 'O');
+            break;
+        case 2:
+            players[1] = new TicTacToeRandomPlayer<char>('O');
+            break;
+        default:
+            cout << "Invalid choice for Player O. Exiting the game.\n";
+            return ;
+    }
+
+    // Set the board pointer for players
+    players[0]->setBoard(B);
+    players[1]->setBoard(B);
+
+    // Create the game manager and run the game
+    GameManager5x5<char> ttt_game(B, players);
+    ttt_game.run();
+
+    // Clean up
+    delete B;
+    for (int i = 0; i < 2; ++i) {
+        delete players[i];
+    }
+
+    return ;
+}
 
 //Game 4 : Made by Basmala
 void mainG4(){
@@ -561,106 +441,74 @@ void mainG5() {
     GameManager<int> NumericalTicTacToeGame(board, players);
     NumericalTicTacToeGame.run();
 
-    // Clean up dynamically allocated resources
+
     delete board;
     for (auto& player : players) {
         delete player;
     }
 }
 
-// // Game 6 : Made by Rahme
-//
-// template <typename T>
-// class MisereGameManager : public GameManager<T> {
-// public:
-//     MisereGameManager(Board<T>* bPtr, Player<T>* playerPtr[2]) : GameManager<T>(bPtr, playerPtr) {}
-//     void run();
-// };
-//
-// template <typename T>
-// void MisereGameManager<T>::run() {
-//     int x, y;
-//
-//     this->boardPtr->display_board();
-//
-//     while (!this->boardPtr->game_is_over()) {
-//         for (int i : {0, 1}) {
-//             this->players[i]->getmove(x, y);
-//             while (!this->boardPtr->update_board(x, y, this->players[i]->getsymbol())) {
-//                 this->players[i]->getmove(x, y);
-//             }
-//             this->boardPtr->display_board();
-//             if (this->boardPtr->is_win()) {
-//                 cout << this->players[(i + 1) % 2]->getname() << " wins\n"; // Opponent wins
-//                 return;
-//             }
-//             if (this->boardPtr->is_draw()) {
-//                 cout << "Draw!\n";
-//                 return;
-//             }
-//         }
-//     }
-// }
-//
-// void mainG6() {
-//     int choice;
-//     Player<char>* players[2];
-//     X_O_Board_<char>* B = new X_O_Board_<char>();
-//     string playerXName, player2Name;
-//
-//     cout << "Welcome to Misere Tic Tac Toe Game. :)\n";
-//
-//     // Set up player 1
-//     cout << "Enter Player X name: ";
-//     cin >> playerXName;
-//     cout << "Choose Player X type:\n";
-//     cout << "1. Human\n";
-//     cout << "2. Random Computer\n";
-//     cin >> choice;
-//
-//     switch(choice) {
-//         case 1:
-//             players[0] = new X_O_Player_<char>(playerXName, 'X');
-//             break;
-//         case 2:
-//             players[0] = new X_O_Random_Player_<char>('X');
-//             break;
-//         default:
-//             cout << "Invalid choice for Player 1. Exiting the game.\n";
-//             return ;
-//     }
-//
-//     // Set up player 2
-//     cout << "Enter Player 2 name: ";
-//     cin >> player2Name;
-//     cout << "Choose Player 2 type:\n";
-//     cout << "1. Human\n";
-//     cout << "2. Random Computer\n";
-//     cin >> choice;
-//
-//     switch(choice) {
-//         case 1:
-//             players[1] = new X_O_Player_<char>(player2Name, 'O');
-//             break;
-//         case 2:
-//             players[1] = new X_O_Random_Player_<char>('O');
-//             break;
-//         default:
-//             cout << "Invalid choice for Player 2. Exiting the game.\n";
-//             return ;
-//     }
-//
-//     // Create the Misere game manager and run the game
-//     MisereGameManager<char> x_o_game(B, players);
-//     x_o_game.run();
-//
-//     // Clean up
-//     delete B;
-//     for (int i = 0; i < 2; ++i) {
-//         delete players[i];
-//     }
-//
-// }
+// // Game 6 : Made by Rahma
+
+void mainG6(){
+    int choice;
+    Player<char>* players[2];
+    Misere_Board<char>* B = new Misere_Board<char>();
+    string playerXName, player2Name;
+
+    cout << "Welcome to Misere Tic Tac Toe Game. :)\n";
+
+    // Set up player 1
+    cout << "Enter Player X name: ";
+    cin >> playerXName;
+    cout << "Choose Player X type:\n";
+    cout << "1. Human\n";
+    cout << "2. Random Computer\n";
+    cin >> choice;
+
+    switch(choice) {
+        case 1:
+            players[0] = new Misere_Player<char>(playerXName, 'X');
+            break;
+        case 2:
+            players[0] = new Misere_Random_Player<char>('X');
+            break;
+        default:
+            cout << "Invalid choice for Player 1. Exiting the game.\n";
+            return ;
+    }
+
+    // Set up player 2
+    cout << "Enter Player 2 name: ";
+    cin >> player2Name;
+    cout << "Choose Player 2 type:\n";
+    cout << "1. Human\n";
+    cout << "2. Random Computer\n";
+    cin >> choice;
+
+    switch(choice) {
+        case 1:
+            players[1] = new Misere_Player<char>(player2Name, 'O');
+            break;
+        case 2:
+            players[1] = new Misere_Random_Player<char>('O');
+            break;
+        default:
+            cout << "Invalid choice for Player 2. Exiting the game.\n";
+            return ;
+    }
+
+    // Create the Misere game manager and run the game
+    MisereGameManager<char> x_o_game(B, players);
+    x_o_game.run();
+
+    // Clean up
+    delete B;
+    for (int i = 0; i < 2; ++i) {
+        delete players[i];
+    }
+    return ;
+}
 
 //Game 7 & 8 & 9 : Made by the 3 of us : Malak , Basmala , Rahma
 void mainG7() {
