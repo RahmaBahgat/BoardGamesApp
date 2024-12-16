@@ -78,5 +78,5 @@ The framework has been extended to support the following games:
 
 1. **Clone the Repository**:  
    ```bash
-   git clone https://github.com/your-username/board-game-framework.git
+   git clone https://github.com/Malaknourr/BoardGames
    cd board-game-framework
