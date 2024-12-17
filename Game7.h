@@ -67,7 +67,7 @@ TicTacToe4x4_Board<T>::TicTacToe4x4_Board() {
     // Initialize specific cells for starting board state
     if (this->n_moves == 0) {
         this->board[0][0] = 'O'; this->board[0][1] = 'X'; this->board[0][2] = 'O'; this->board[0][3] = 'X';
-        this->board[2][0] = 'X'; this->board[2][1] = 'O'; this->board[2][2] = 'X'; this->board[2][3] = 'O';
+        this->board[3][0] = 'X'; this->board[3][1] = 'O'; this->board[3][2] = 'X'; this->board[3][3] = 'O';
     }
 }
 
