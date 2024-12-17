@@ -101,6 +101,7 @@ bool NumericalTicTacToe_Board<T>::update_board(int x, int y, T number) {
         this->board[x][y] = number;
         ++keepTrack[number - 1]; // Mark the number as used
         ++this->n_moves;
+
         return true;
     }
 
@@ -157,54 +158,42 @@ void NumericalTicTacToe_Board<T>::display_board() {
 
 template<typename T>
 bool NumericalTicTacToe_Board<T>::is_win() {
-
-    // Check diagonals
+    // Check all rows, columns, and diagonals for the winning condition
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->columns; j++) {
-            if (i - 2 >= 0 && j + 2 < this->columns) {
-                if (this->board[i][j] + this->board[i - 1][j + 1] + this->board[i - 2][j + 2] == 15) {
-                    if (this->board[i][j] != 0 && this->board[i - 1][j + 1] != 0 && this->board[i - 2][j + 2] != 0) {
-                        return true;
-                    }
+            // Check row (horizontal)
+            if (j + 2 < this->columns &&
+                this->board[i][j] != 0 && this->board[i][j + 1] != 0 && this->board[i][j + 2] != 0 &&
+                this->board[i][j] + this->board[i][j + 1] + this->board[i][j + 2] == 15) {
+                return true;
                 }
-            } else if (i + 2 < this->rows && j + 2 < this->columns) {
-                if (this->board[i][j] + this->board[i + 1][j + 1] + this->board[i + 2][j + 2] == 15) {
-                    if (this->board[i][j] != 0 && this->board[i + 1][j + 1] != 0 && this->board[i + 2][j + 2] != 0) {
-                        return true;
-                    }
-                }
-            }
-        }
-    }
 
-    // Check rows (horizontal)
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if (i + 2 < this->columns) {
-                if (this->board[j][i] + this->board[j][i + 1] + this->board[j][i + 2] == 15) {
-                    if (this->board[i][j] != 0 && this->board[j][i + 1] != 0 && this->board[j][i + 2] != 0) {
-                        return true;
-                    }
+            // Check column (vertical)
+            if (i + 2 < this->rows &&
+                this->board[i][j] != 0 && this->board[i + 1][j] != 0 && this->board[i + 2][j] != 0 &&
+                this->board[i][j] + this->board[i + 1][j] + this->board[i + 2][j] == 15) {
+                return true;
                 }
-            }
-        }
-    }
 
-    // Check columns (vertical)
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if (j + 2 < this->rows) {
-                if (this->board[j][i] + this->board[j + 1][i] + this->board[j + 2][i] == 15) {
-                    if (this->board[i][j] != 0 && this->board[j + 1][i] != 0 && this->board[j + 2][i] != 0) {
-                        return true;
-                    }
+            // Check diagonal (top-left to bottom-right)
+            if (i + 2 < this->rows && j + 2 < this->columns &&
+                this->board[i][j] != 0 && this->board[i + 1][j + 1] != 0 && this->board[i + 2][j + 2] != 0 &&
+                this->board[i][j] + this->board[i + 1][j + 1] + this->board[i + 2][j + 2] == 15) {
+                return true;
                 }
-            }
+
+            // Check diagonal (bottom-left to top-right)
+            if (i - 2 >= 0 && j + 2 < this->columns &&
+                this->board[i][j] != 0 && this->board[i - 1][j + 1] != 0 && this->board[i - 2][j + 2] != 0 &&
+                this->board[i][j] + this->board[i - 1][j + 1] + this->board[i - 2][j + 2] == 15) {
+                return true;
+                }
         }
     }
 
     return false;
 }
+
 
 // Check if the game is a draw
 // A draw occurs when all cells are filled and there is no winner
@@ -228,7 +217,9 @@ bool NumericalTicTacToe_Board<T>::game_is_over() {
 // Initializes a player with a name and a symbol
 
 template<typename T>
-NumericalTicTacToe_Player<T>::NumericalTicTacToe_Player(string name, T symbol) : Player<T>(name, symbol) {}
+NumericalTicTacToe_Player<T>::NumericalTicTacToe_Player(string name, T symbol) : Player<T>(name, symbol) {
+
+}
 
 // Prompt the player for a move
 // Input coordinates (x, y) and a number between 1 and 9
@@ -286,6 +277,8 @@ void NumericalTicTacToe_Player<T>::getmove(int &x, int &y) {
 
 template<typename T>
 NumericalTicTacToe_RandomPlayer<T>::NumericalTicTacToe_RandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
+    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
+
     this->dimension = 9;
     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator
 }

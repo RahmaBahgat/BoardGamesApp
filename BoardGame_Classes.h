@@ -86,6 +86,7 @@ public:
 
 template <typename T>
 class GameManager {
+protected:
     Board<T>* boardPtr; // Links the manager to a board.
     Player<T>* players[2]; //Array of two player pointers.->Flexibility for any Player implementation.
 public:

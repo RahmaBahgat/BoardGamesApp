@@ -77,41 +77,10 @@ ConnectFourBoard<T>::ConnectFourBoard() {
 
 template<typename T>
 bool ConnectFourBoard<T>::update_board(int x, int y, T symbol) {
-    // Handle AI-specific symbols 'A' and 'I'.
-    if (symbol == 'A' || symbol == 'I') {
-        // Validate input coordinates and check if the cell is empty.
-        if (x < 0 || x >= this->rows || y < 0 || y >= this->columns || this->board[x][y] != ' ') {
-            return false;
-        }
-
-        // Place the symbol in the lowest available row for the given column.
-        for (int i = this -> rows - 1 ; i >= 0; --i) {
-            if(this->board[i][y] == ' ') {
-                if (x != i) {
-                    return false;  // Ensure the move aligns with Connect Four rules.
-                }
-                if (x == i) {
-                    this->board[x][y] = toupper(symbol);  // Place the symbol (uppercased).
-                    ++this->n_moves;  // Increment the move count.
-                    return true;
-                }
-            }
-        }
-
-        // Assign default symbols for AI players.
-        if (symbol == 'A') {
-            this->board[x][y] = 'X';
-        }
-        if (symbol == 'I') {
-            this->board[x][y] = 'O';
-        }
-        ++this->n_moves;
-        return true;
-    }
 
     // Handle moves for human and random players.
     if (this->board[x][y] != ' ') {
-        cout << "Invalid input" << endl;
+        // cout<<"ERROR :: Occupied Cell !"<<endl;
         return false;
     }
 
@@ -147,81 +116,38 @@ void ConnectFourBoard<T>::display_board() {
 // Check for a win condition on the board.
 template<typename T>
 bool ConnectFourBoard<T>::is_win() {
-//first player to get four-in-a-row vertically, horizontally, or diagonally wins.
+    // Check horizontal, vertical, and diagonal for the given player ('O' or 'X')
 
-    //Diagonals for O
+    // Loop through each cell in the board
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->columns; j++) {
-            if(i - 4 >= 0 && j + 4 < this->columns) {
-                if (this->board[i][j] == 'O' && this->board[i - 1 ][j + 1] == 'O' && this->board[i - 2 ][j + 2] == 'O' && this->board[i - 3][j + 3] == 'O') {
-                    return true;
+            // Horizontal check
+            if (j + 3 < this->columns &&
+                this->board[i][j] == this->board[i][j + 1]  && this->board[i][j + 1] == this->board[i][j + 2] &&
+                this->board[i][j + 2] == this->board[i][j + 3] && this->board[i][j] != ' ') {
+                return true;
                 }
-            }
-            else if(i + 4 < this->rows && j + 4 >= 0) {
-                if (this->board[i][j] == 'O' && this->board[i + 1 ][j + 1] == 'O' && this->board[i + 2 ][j + 2] == 'O' && this->board[i + 3][j + 3] == 'O') {
-                    return true;
-                }
-            }
-        }
-    }
 
-    //Diagonals for X
-    for (int i = 0; i < this->rows; i++) {
-        for (int j = 0; j < this->columns; j++) {
-            if(i - 4 >= 0 && j + 4 < this->columns) {
-                if (this->board[i][j] == 'X' && this->board[i - 1 ][j + 1] == 'X' && this->board[i - 2 ][j + 2] == 'X' && this->board[i - 3][j + 3] == 'X') {
-                    return true;
+            // Vertical check
+            if (i + 3 < this->rows &&
+                this->board[i][j] == this->board[i + 1][j] && this->board[i + 1][j] == this->board[i + 2][j] &&
+                this->board[i + 2][j] == this->board[i + 3][j] && this->board[i][j] != ' ') {
+                return true;
                 }
-            }
-            else if(i + 4 < this->rows && j + 4 >= 0) {
-                if (this->board[i][j] == 'X' && this->board[i + 1 ][j + 1] == 'X' && this->board[i + 2 ][j + 2] == 'X' && this->board[i + 3][j + 3] == 'X') {
-                    return true;
-                }
-            }
-        }
-    }
 
-    //Horizontal O - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(i + 3 < this->columns ) {
-                if (this->board[j][i] == 'O' && this->board[j][i + 1] == 'O' && this->board[j][i + 2] == 'O' && this->board[j][i + 3] == 'O') {
-                    return true;
+            // Diagonal (top-left to bottom-right)
+            if (i + 3 < this->rows && j + 3 < this->columns &&
+                this->board[i][j] == this->board[i + 1][j + 1] && this->board[i + 1][j + 1] == this->board[i + 2][j + 2] &&
+                this->board[i + 2][j + 2] == this->board[i + 3][j + 3] && this->board[i][j] != ' ' ) {
+                return true;
                 }
-            }
-        }
-    }
 
-    //Horizontal X - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(i + 3 < this->columns ) {
-                if (this->board[j][i] == 'X' && this->board[j][i + 1] == 'X' && this->board[j][i + 2] == 'X' && this->board[j][i + 3] == 'X') {
-                    return true;
+            // Diagonal (bottom-left to top-right)
+            if (i - 3 >= 0 && j + 3 < this->columns &&
+                this->board[i][j] == this->board[i - 1][j + 1] && this->board[i - 1][j + 1] ==this->board[i - 2][j + 2]&&
+                this->board[i - 2][j + 2] == this->board[i - 3][j + 3] && this->board[i][j] != ' ' ) {
+                return true;
                 }
-            }
-        }
-    }
-
-    //Vertical X - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(j + 3 < this->rows ) {
-                if (this->board[j][i] == 'X' && this->board[j + 1 ][i] == 'X' && this->board[j + 2 ][i] == 'X' && this->board[j + 3 ][i] == 'X') {
-                    return true;
-                }
-            }
-        }
-    }
-
-    //Vertical O - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(j + 3 < this->rows ) {
-                if (this->board[j][i] == 'O' && this->board[j + 1 ][i] == 'O' && this->board[j + 2 ][i] == 'O' && this->board[j + 3 ][i] == 'O') {
-                    return true;
-                }
-            }
         }
     }
     return false;
@@ -270,6 +196,7 @@ void ConnectFourPlayer<T>::getmove(int &x, int &y) {
 // Constructor for random AI player.
 template<typename T>
 ConnectFourRandomPlayer<T>::ConnectFourRandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
+    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator.
 }
 

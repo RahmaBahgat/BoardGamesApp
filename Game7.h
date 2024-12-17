@@ -164,7 +164,7 @@ bool TicTacToe4x4_Board<T>::is_win() {
     //Horizontal X - Next to each other
     for (int i = 0; i < this->columns; i++) {
         for (int j = 0; j < this->rows; j++) {
-            if(i + 2 < this->columns ) {
+            if(i + 2 <= this->columns ) {
                 if (this->board[j][i] == 'X' && this->board[j][i + 1] == 'X' && this->board[j][i + 2] == 'X') {
                     return true;
                 }
@@ -175,7 +175,7 @@ bool TicTacToe4x4_Board<T>::is_win() {
     //Vertical X - Next to each other
     for (int i = 0; i < this->columns; i++) {
         for (int j = 0; j < this->rows; j++) {
-            if(j + 2 < this->rows ) {
+            if(j + 2 <= this->rows ) {
                 if (this->board[j][i] == 'X' && this->board[j + 1 ][i] == 'X' && this->board[j + 2 ][i] == 'X') {
                     return true;
                 }
@@ -186,7 +186,7 @@ bool TicTacToe4x4_Board<T>::is_win() {
     //Vertical O - Next to each other
     for (int i = 0; i < this->columns; i++) {
         for (int j = 0; j < this->rows; j++) {
-            if(j + 2 < this->rows ) {
+            if(j + 2 <= this->rows ) {
                 if (this->board[j][i] == 'O' && this->board[j + 1 ][i] == 'O' && this->board[j + 2 ][i] == 'O') {
                     return true;
                 }
@@ -198,12 +198,12 @@ bool TicTacToe4x4_Board<T>::is_win() {
     //Diagonals for O
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->columns; j++) {
-            if(i - 2 >= 0 && j + 2 < this->columns) {
+            if(i - 2 >= 0 && j + 2 <= this->columns) {
                 if (this->board[i][j] == 'O' && this->board[i - 1 ][j + 1] == 'O' && this->board[i - 2 ][j + 2] == 'O' ) {
                     return true;
                 }
             }
-            else if(i + 2 < this->rows && j + 2 >= 0) {
+            else if(i + 2 <= this->rows && j + 2 >= 0) {
                 if (this->board[i][j] == 'O' && this->board[i + 1 ][j + 1] == 'O' && this->board[i + 2 ][j + 2] == 'O' ) {
                     return true;
                 }
@@ -214,12 +214,12 @@ bool TicTacToe4x4_Board<T>::is_win() {
     //Diagonals for X
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->columns; j++) {
-            if(i - 2 >= 0 && j + 2 < this->columns) {
+            if(i - 2 >= 0 && j + 2 <= this->columns) {
                 if (this->board[i][j] == 'X' && this->board[i - 1 ][j + 1] == 'X' && this->board[i - 2 ][j + 2] == 'X' ) {
                     return true;
                 }
             }
-            else if(i + 2 < this->rows && j + 2 >= 0) {
+            else if(i + 2 <= this->rows && j + 2 >= 0) {
                 if (this->board[i][j] == 'X' && this->board[i + 1 ][j + 1] == 'X' && this->board[i + 2 ][j + 2] == 'X' ) {
                     return true;
                 }
@@ -257,6 +257,7 @@ void TicTacToe4x4_Player<T>::getmove(int& x, int& y) {
 
 template <typename T>
 TicTacToe4x4_RandomPlayer<T>::TicTacToe4x4_RandomPlayer(T symbol) : Player<T>(symbol) {
+    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator
 }
 
