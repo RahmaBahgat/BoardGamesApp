@@ -77,10 +77,8 @@ ConnectFourBoard<T>::ConnectFourBoard() {
 
 template<typename T>
 bool ConnectFourBoard<T>::update_board(int x, int y, T symbol) {
-
     // Handle moves for human and random players.
     if (this->board[x][y] != ' ') {
-        // cout<<"ERROR :: Occupied Cell !"<<endl;
         return false;
     }
 
@@ -121,14 +119,14 @@ bool ConnectFourBoard<T>::is_win() {
     // Loop through each cell in the board
     for (int i = 0; i < this->rows; i++) {
         for (int j = 0; j < this->columns; j++) {
-            // Horizontal check
+            // Horizontal check (row is same , col increases)
             if (j + 3 < this->columns &&
                 this->board[i][j] == this->board[i][j + 1]  && this->board[i][j + 1] == this->board[i][j + 2] &&
                 this->board[i][j + 2] == this->board[i][j + 3] && this->board[i][j] != ' ') {
                 return true;
                 }
 
-            // Vertical check
+            // Vertical check (row increases , col is same)
             if (i + 3 < this->rows &&
                 this->board[i][j] == this->board[i + 1][j] && this->board[i + 1][j] == this->board[i + 2][j] &&
                 this->board[i + 2][j] == this->board[i + 3][j] && this->board[i][j] != ' ') {
@@ -196,7 +194,7 @@ void ConnectFourPlayer<T>::getmove(int &x, int &y) {
 // Constructor for random AI player.
 template<typename T>
 ConnectFourRandomPlayer<T>::ConnectFourRandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
-    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
+    this->name = (symbol == 'X') ? "Random Player 1" : "Random Player 2";
     srand(static_cast<unsigned int>(time(0)));  // Seed the random number generator.
 }
 

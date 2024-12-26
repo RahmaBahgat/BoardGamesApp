@@ -43,7 +43,6 @@ class TicTacToe4x4_RandomPlayer : public Player<T> {
 public:
     TicTacToe4x4_RandomPlayer(T symbol); // Constructor to initialize the random player with a symbol
     void getmove(int& x, int& y) override; // Generate a random move
-    bool is_valid_move(int row, int col); // Check if a move is valid
 };
 
 // Implementation of TicTacToeBoard methods
@@ -148,87 +147,47 @@ void TicTacToe4x4_Board<T>::display_board() {
 // Check if there's a win condition
 template <typename T>
 bool TicTacToe4x4_Board<T>::is_win() {
-    // Check rows and columns for a win
+    // Check all directions for 'X' or 'O'
+    for (int i = 0; i < this->rows; ++i) {
+        for (int j = 0; j < this->columns; ++j) {
+            char current = this->board[i][j];
+            if (current != 'X' && current != 'O') {
+                continue; // Skip empty cells
+            }
 
-    //Horizontal O - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(i + 2 <= this->columns ) {
-                if (this->board[j][i] == 'O' && this->board[j][i + 1] == 'O' && this->board[j][i + 2] == 'O') {
-                    return true;
+            // Check horizontal (right)
+            if (j + 2 < this->columns &&
+                current == this->board[i][j + 1] &&
+                current == this->board[i][j + 2]) {
+                return true;
                 }
-            }
-        }
-    }
 
-    //Horizontal X - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(i + 2 <= this->columns ) {
-                if (this->board[j][i] == 'X' && this->board[j][i + 1] == 'X' && this->board[j][i + 2] == 'X') {
-                    return true;
+            // Check vertical (down)
+            if (i + 2 < this->rows &&
+                current == this->board[i + 1][j] &&
+                current == this->board[i + 2][j]) {
+                return true;
                 }
-            }
-        }
-    }
 
-    //Vertical X - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(j + 2 <= this->rows ) {
-                if (this->board[j][i] == 'X' && this->board[j + 1 ][i] == 'X' && this->board[j + 2 ][i] == 'X') {
-                    return true;
+            // Check diagonal down-right
+            if (i + 2 < this->rows && j + 2 < this->columns &&
+                current == this->board[i + 1][j + 1] &&
+                current == this->board[i + 2][j + 2]) {
+                return true;
                 }
-            }
-        }
-    }
 
-    //Vertical O - Next to each other
-    for (int i = 0; i < this->columns; i++) {
-        for (int j = 0; j < this->rows; j++) {
-            if(j + 2 <= this->rows ) {
-                if (this->board[j][i] == 'O' && this->board[j + 1 ][i] == 'O' && this->board[j + 2 ][i] == 'O') {
-                    return true;
+            // Check diagonal up-right
+            if (i - 2 >= 0 && j + 2 < this->columns &&
+                current == this->board[i - 1][j + 1] &&
+                current == this->board[i - 2][j + 2]) {
+                return true;
                 }
-            }
-        }
-    }
-
-    // Check diagonals for a win
-    //Diagonals for O
-    for (int i = 0; i < this->rows; i++) {
-        for (int j = 0; j < this->columns; j++) {
-            if(i - 2 >= 0 && j + 2 <= this->columns) {
-                if (this->board[i][j] == 'O' && this->board[i - 1 ][j + 1] == 'O' && this->board[i - 2 ][j + 2] == 'O' ) {
-                    return true;
-                }
-            }
-            else if(i + 2 <= this->rows && j + 2 >= 0) {
-                if (this->board[i][j] == 'O' && this->board[i + 1 ][j + 1] == 'O' && this->board[i + 2 ][j + 2] == 'O' ) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    //Diagonals for X
-    for (int i = 0; i < this->rows; i++) {
-        for (int j = 0; j < this->columns; j++) {
-            if(i - 2 >= 0 && j + 2 <= this->columns) {
-                if (this->board[i][j] == 'X' && this->board[i - 1 ][j + 1] == 'X' && this->board[i - 2 ][j + 2] == 'X' ) {
-                    return true;
-                }
-            }
-            else if(i + 2 <= this->rows && j + 2 >= 0) {
-                if (this->board[i][j] == 'X' && this->board[i + 1 ][j + 1] == 'X' && this->board[i + 2 ][j + 2] == 'X' ) {
-                    return true;
-                }
-            }
         }
     }
 
     return false; // No win condition
 }
+
 
 // Check if the game is a draw
 template <typename T>
@@ -257,19 +216,18 @@ void TicTacToe4x4_Player<T>::getmove(int& x, int& y) {
 
 template <typename T>
 TicTacToe4x4_RandomPlayer<T>::TicTacToe4x4_RandomPlayer(T symbol) : Player<T>(symbol) {
-    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
+    this->name = (symbol == '1') ? "Random Player 1" : "Random Player 2";
     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator
 }
 
 template <typename T>
-bool TicTacToe4x4_RandomPlayer<T>::is_valid_move(int row, int col) {
-    return this->boardPtr->update_board(row, col, this->symbol); // Check and update the board
-}
-
-template <typename T>
 void TicTacToe4x4_RandomPlayer<T>::getmove(int& row, int& col) {
+    //The indices for the cell that will be moved.
+
     row = rand() % 4; // Generate random row
     col = rand() % 4; // Generate random column
+
+    //The indices for the cell that we will move to.
     globalX1 = rand() % 4; // Generate random target row
     globalY1 = rand() % 4; // Generate random target column
 }

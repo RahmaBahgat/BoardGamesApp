@@ -1,5 +1,4 @@
 // Created by MALAK on 12/3/2024.
-//
 
 #ifndef NUMERICALTICTACTOE_H
 #define NUMERICALTICTACTOE_H
@@ -277,7 +276,7 @@ void NumericalTicTacToe_Player<T>::getmove(int &x, int &y) {
 
 template<typename T>
 NumericalTicTacToe_RandomPlayer<T>::NumericalTicTacToe_RandomPlayer(T symbol) : RandomPlayer<T>(symbol) {
-    this->name = (symbol == 0) ? "Random Player 1" : "Random Player 2";
+    this->name = (symbol == -1) ? "Random Player 1" : "Random Player 2";
 
     this->dimension = 9;
     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator

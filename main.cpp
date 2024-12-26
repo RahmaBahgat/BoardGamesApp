@@ -47,7 +47,7 @@ void showGameBrief(int choice) {
             break;
         case 5:
             cout << "5- Numerical Tic-Tac-Toe\n";
-            cout << "Place numbers on a 3x3 grid to achieve a sum of 15 in a row, column, or diagonal.\n";
+            cout << "Place numbers (From 1 to 9) on a 3x3 grid to achieve a sum of 15 in a row, column, or diagonal.\n First Player -> Odd Numbers.\n Second Player -> Even Numbers.\n";
             mainG5();
             break;
         case 6:
@@ -233,7 +233,7 @@ void mainG2() {
     } while (choice != 1 && choice != 2);
 
     // Create the game manager and run the game
-    GameManager<char> ConnectFourGame(board, players);
+    GameManager<char>ConnectFourGame(board, players);
     ConnectFourGame.run();
 
     // Clean up dynamically allocated resources

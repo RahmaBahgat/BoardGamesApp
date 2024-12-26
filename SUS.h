@@ -99,6 +99,16 @@ bool SUS_Board<T>::update_board(int x, int y, T mark) {
     return false;
 }
 
+
+template <typename T>
+bool SUS_Board<T>::checker(int x, int y, char expected) {
+    // Ensure the coordinates are within the board boundaries
+    if (x >= 0 && x < this->rows && y >= 0 && y < this->columns) {
+        return this->board[x][y] == expected;
+    }
+    return false;
+}
+
 // Check if a "SUS" is formed
 template <typename T>
 bool SUS_Board<T>::completes_SUS(int x, int y, T mark) {
@@ -128,14 +138,6 @@ bool SUS_Board<T>::completes_SUS(int x, int y, T mark) {
 }
 
 
-template <typename T>
-bool SUS_Board<T>::checker(int x, int y, char expected) {
-    // Ensure the coordinates are within the board boundaries
-    if (x >= 0 && x < this->rows && y >= 0 && y < this->columns) {
-        return this->board[x][y] == expected;
-    }
-    return false;
-}
 
 // Display the board
 template <typename T>
@@ -154,9 +156,8 @@ void SUS_Board<T>::display_board() {
     }
 }
 
-// Unused condition
 template <typename T>
-bool SUS_Board<T>::is_win() {
+bool SUS_Board<T>::is_win() {// Unused condition
     return false;
 }
 
