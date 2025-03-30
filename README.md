@@ -74,9 +74,3 @@ The framework has been extended to support the following games:
 - **Description**: Form the sequence "S-U-S" on a 3x3 grid.
 - **Winning**: Create the most "S-U-S" sequences.
 
-## How to Use the Framework
-
-1. **Clone the Repository**:  
-   ```bash
-   git clone https://github.com/Malaknourr/BoardGames
-   cd board-game-framework
