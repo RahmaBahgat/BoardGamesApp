@@ -1,76 +1,72 @@
-# Board Game Framework
+# 🎲 Board Game Framework – Java OOP Project
 
-A generic **board game framework** that demonstrates the power of Object-Oriented Programming (OOP) in enabling modularity and reusability. This framework allows developers to easily create new board games by extending its core functionality without modifying the existing code. 
+> 📜 **Disclaimer:** This project was created as part of a collaborative academic assignment. I contributed to several game variants within the framework, but I am not the sole developer of the entire system.
 
-## Features
+---
 
-- **Game Manager**: Manages the game flow, player turns, and determines the game outcome.
-- **Abstract Player**: Represents a generic player, which can be extended to define game-specific player behaviors.
-- **Abstract Board**: Defines the core structure of a game board with customizable rules.
-- **Random Player**: Implements random move generation for any board game.
+## 🧠 Overview
 
-## Framework Overview
+A modular and extensible board game framework built in Java to showcase Object-Oriented Programming (OOP) principles. Designed to allow easy creation of new board game types without modifying the core logic.
 
-The framework supports easy development of multiple board games like Tic-Tac-Toe and its variants. It adheres to the **Open/Closed Principle**, enabling developers to extend the framework by creating new child classes for specific game rules and player behaviors.
+The framework follows the **Open/Closed Principle**, enabling developers to extend functionality through inheritance and polymorphism.
 
-### Key Framework Classes
+---
 
-1. **`GameManager`**  
-   Manages the game logic, including board display, turn switching, and checking win/draw conditions.
+## 🧩 Key Features
 
-2. **`Player`**  
-   Represents a generic game player with attributes such as name, symbol, and ability to make moves.
+- **Game Manager** – Handles gameplay loop, player turns, and outcome detection  
+- **Abstract Board** – Core structure for any board-based game  
+- **Abstract Player** – Extendable class representing a player in any game  
+- **Random Player** – Computer-controlled player with random valid moves  
+- **Extensible Design** – Add new games by extending base classes
 
-3. **`Board`**  
-   Abstract class defining the core board structure and rules, to be extended by specific game implementations.
+---
 
-4. **`RandomPlayer`**  
-   A computer player that generates random moves adhering to game rules.
+## 🎮 Games Built Using This Framework
 
-### Example Game Implementation
+The project currently supports a variety of classic and creative games, including:
 
-The framework includes a demo implementation of **Tic-Tac-Toe (X-O)**:
-- **`X_O_Board`**: Implements a 3x3 grid and rules for X-O.
-- **`X_O_Player`**: Represents a player for X-O.
-- **`X_O_Random_Player`**: A random player for X-O.
+1. **Pyramid Tic-Tac-Toe** – Played on a 5-3-1 shaped pyramid board  
+2. **Four-in-a-Row** – Similar to Connect Four  
+3. **5x5 Tic-Tac-Toe** – Players have 12 moves each; win by creating the most 3-in-a-rows ✅ *(contributed)*  
+4. **Word Tic-Tac-Toe** – Form valid words using letters on a 3x3 board  
+5. **Numerical Tic-Tac-Toe** – Use numbers to make 15 across a row/column/diagonal  
+6. **Misère Tic-Tac-Toe** – Avoid making 3 in a row — or you lose ✅ *(contributed)*  
+7. **4x4 Tic-Tac-Toe** – Move tokens to align three on a 4x4 grid  
+8. **Ultimate Tic-Tac-Toe** – A meta-game with 9 boards making up one master board ✅ *(partial contribution)*  
+9. **SUS Game** – Form the word "S-U-S" in any direction ✅ *(partial contribution)*
 
-## Games Developed Using the Framework
+---
 
-The framework has been extended to support the following games:
+## ⚙️ Technologies Used
 
-### 1. Pyramid Tic-Tac-Toe
-- **Description**: Played on a pyramid-shaped board with rows of 5, 3, and 1 square.
-- **Winning**: First player to get three in a row (horizontal, vertical, or diagonal) wins.
+- **Language:** Java  
+- **UI:** Console-based and Java Swing (in some variants)  
+- **Design Principles:**  
+  - Abstraction & Inheritance  
+  - Open/Closed Principle  
+  - Polymorphism
 
-### 2. Four-in-a-Row
-- **Description**: A 7x6 grid where players place their symbols from the bottom up.
-- **Winning**: Achieve four in a row horizontally, vertically, or diagonally.
+---
 
-### 3. 5x5 Tic-Tac-Toe
-- **Description**: Played on a 5x5 grid with up to 12 turns per player.
-- **Winning**: Count the most three-in-a-row sequences.
+## 🚀 How to Run
 
-### 4. Word Tic-Tac-Toe
-- **Description**: Players place letters on a 3x3 grid to form valid words.
-- **Winning**: Form a valid word (from `dic.txt`) horizontally, vertically, or diagonally.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/board-game-framework.git
+Open in your preferred Java IDE
 
-### 5. Numerical Tic-Tac-Toe
-- **Description**: Players use numbers (odd/even) to sum to 15 in a row, column, or diagonal.
-- **Winning**: Form a sum of 15 in a line.
+Navigate to any game variant and run its main class
 
-### 6. Misere Tic-Tac-Toe
-- **Description**: Players aim to avoid forming three in a row.
-- **Losing**: Player who forms three in a row loses.
+🧑‍💻 My Contributions
+I contributed the following game implementations within this framework:
 
-### 7. 4x4 Tic-Tac-Toe
-- **Description**: Players move tokens on a 4x4 grid aiming to align three tokens.
-- **Winning**: Align three tokens horizontally, vertically, or diagonally.
+✅ 5x5 Tic-Tac-Toe
 
-### 8. Ultimate Tic-Tac-Toe
-- **Description**: A meta-game where smaller Tic-Tac-Toe boards make up a larger 3x3 grid.
-- **Winning**: Win three smaller boards in a row on the larger grid.
+✅ Misère Tic-Tac-Toe
 
-### 9. SUS Game
-- **Description**: Form the sequence "S-U-S" on a 3x3 grid.
-- **Winning**: Create the most "S-U-S" sequences.
+🟡 Partial contribution to:
 
+Ultimate Tic-Tac-Toe
+
+SUS Game
