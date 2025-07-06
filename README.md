@@ -1,4 +1,4 @@
-# 🎲 Board Game Framework – Java OOP Project
+# 🎲 Board Game Framework – C++ OOP Project
 
 > 📜 **Disclaimer:** This project was created as part of a collaborative academic assignment. I contributed to several game variants within the framework, but I am not the sole developer of the entire system.
 
@@ -6,9 +6,8 @@
 
 ## 🧠 Overview
 
-A modular and extensible board game framework built in Java to showcase Object-Oriented Programming (OOP) principles. Designed to allow easy creation of new board game types without modifying the core logic.
+A modular and extensible board game framework built in C++ to showcase Object-Oriented Programming (OOP) principles. Designed to allow easy creation of new board game types without modifying the core logic.
 
-The framework follows the **Open/Closed Principle**, enabling developers to extend functionality through inheritance and polymorphism.
 
 ---
 
@@ -40,11 +39,10 @@ The project currently supports a variety of classic and creative games, includin
 
 ## ⚙️ Technologies Used
 
-- **Language:** Java  
-- **UI:** Console-based and Java Swing (in some variants)  
+- **Language:** C++  
+- **UI**
 - **Design Principles:**  
   - Abstraction & Inheritance  
-  - Open/Closed Principle  
   - Polymorphism
 
 ---
@@ -58,7 +56,7 @@ Open in your preferred Java IDE
 
 Navigate to any game variant and run its main class
 
-🧑‍💻 My Contributions
+My Contributions
 I contributed the following game implementations within this framework:
 
 ✅ 5x5 Tic-Tac-Toe
